@@ -1,0 +1,233 @@
+/* Main Stylesheet */
+/* Color Palette:
+   - Dominant: #004224 (Green)
+   - Font Color: #f8f0e5 (White/Cream)
+   - Accent: #423a26 (Brown)
+   - Font: "The Seasons"
+*/
+
+/* Import The Seasons font - you'll need to host this or use a web font service */
+@import url('https://fonts.googleapis.com/css2?family=The+Seasons&display=swap');
+
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Base Styles */
+body {
+    font-family: 'The Seasons', serif;
+    background-color: #f8f0e5;
+    color: #004224;
+    line-height: 1.6;
+}
+
+/* Container */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+header {
+    background-color: #004224;
+    color: #f8f0e5;
+    padding: 20px 0;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+/* Navigation */
+nav {
+    background-color: #423a26;
+    padding: 10px 0;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #f8f0e5;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #d9d0c7;
+    text-decoration: underline;
+}
+
+/* Main Content */
+main {
+    padding: 30px 0;
+}
+
+section {
+    margin-bottom: 40px;
+}
+
+h2, h3, h4 {
+    color: #004224;
+    margin-bottom: 15px;
+}
+
+p {
+    margin-bottom: 15px;
+    color: #1a1a1a;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    background-color: #004224;
+    color: #f8f0e5;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'The Seasons', serif;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #00593a;
+}
+
+.btn-secondary {
+    background-color: #423a26;
+}
+
+.btn-secondary:hover {
+    background-color: #5a4f34;
+}
+
+/* Cards */
+.card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.card h3 {
+    color: #004224;
+    border-bottom: 2px solid #423a26;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+/* Search Bar Styles */
+
+.search-container {
+    display: flex;
+    margin: 20px auto;
+    max-width: 500px;
+}
+
+.search-container input {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #423a26;
+    border-radius: 4px 0 0 4px;
+}
+
+.search-container button {
+    background-color: #004224;
+    color: #f8f0e5;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+}
+
+/* Content Placeholder */
+
+.content-placeholder {
+    text-align: center;
+    padding: 50px 0;
+    background-color: #f8f0e5;
+    border: 1px dashed #423a26;
+    margin: 20px 0;
+}
+
+/* Form Elements */
+input, textarea, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #423a26;
+    border-radius: 4px;
+    font-family: 'The Seasons', serif;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #004224;
+}
+
+/* Footer */
+footer {
+    background-color: #004224;
+    color: #f8f0e5;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
+/* Utility Classes */
+.text-center {
+    text-align: center;
+}
+
+.text-accent {
+    color: #423a26;
+}
+
+.bg-primary {
+    background-color: #004224;
+    color: #f8f0e5;
+}
+
+.bg-secondary {
+    background-color: #423a26;
+    color: #f8f0e5;
+}
+
+.bg-light {
+    background-color: #f8f0e5;
+    color: #004224;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav ul li {
+        margin: 5px 0;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+}
