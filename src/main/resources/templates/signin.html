@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign in</title>
+    <link rel="stylesheet" href="GilbertStyle.css">
+</head>
+<body>
+<div class="container">
+  <h2>Sign In</h2>
+  <!-- Change the action to include the full path to prevent Spring Security interception -->
+  <form action="/signin" method="post" th:object="${user}">
+    <label>Username</label>
+    <input type="text" name="email" th:field="*{email}" required>
+    <label>Password</label>
+    <input type="password" name="password" th:field="*{password}" required>
+    <div class="error" th:if="${param.error}">Invalid email or password</div>
+    <div class="error" th:text="${error}"></div>
+    <button type="submit">Log ind</button>
+  </form>
+  <div class="link">
+    <a href="/signup"> Opret en bruger</a>
+  </div>
+
+</body>
+</html>
