@@ -53,7 +53,7 @@ public class LoginController {
     @PostMapping("/signin")
     public String signin(@ModelAttribute User user, Model model) {
 
-        return "";
+        return "home";
     }
 
 
