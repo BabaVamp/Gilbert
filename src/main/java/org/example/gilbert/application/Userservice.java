@@ -1,11 +1,14 @@
 package org.example.gilbert.application;
 
 import org.example.gilbert.domain.User;
+import org.example.gilbert.infrastucture.Userrepo;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class Userservice {
+
+    private Userrepo userrepo;
 
 
     public User SignIn(String Username, String Password) {
@@ -34,7 +37,12 @@ public class Userservice {
     }
 
 
-    public void createUser(User user) {
+    public User createUser(User user) {
+        return userrepo.save(user);
 
+    }
+
+    public User findByEmail(String email) {
+        return userrepo.findByEmail(email);
     }
 }

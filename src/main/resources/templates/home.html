@@ -15,15 +15,22 @@
 </header>
 
 <nav>
-    <ul>
-        <li><a href="home"><i class="fas fa-home"></i> Home</a></li>
-        <li><a href="brands"><i class="fas fa-tags"></i> Brands</a></li>
-        <li><a href="favs"><i class="fas fa-heart"></i> Favourites</a></li>
-        <li><a href="signin"><i class="fas fa-profile"></i>Sign In</a></li>
-        <li><a href="signup"><i class="fas fa-profile"></i>Sign Up</a></li>
-
-    </ul>
+    <button class="burger-menu" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+    </button>
+    <div class="nav-links">
+        <ul class="nav-main">
+            <li><a href="home"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="brands"><i class="fas fa-tags"></i> Brands</a></li>
+            <li><a href="favs"><i class="fas fa-heart"></i> Favourites</a></li>
+        </ul>
+        <ul class="nav-auth">
+            <li><a href="signin"><i class="fas fa-sign-in-alt"></i> Sign In</a></li>
+            <li><a href="signup"><i class="fas fa-user-plus"></i> Sign Up</a></li>
+        </ul>
+    </div>
 </nav>
+
 
 <main class="container">
     <!-- Simple search bar -->
@@ -32,15 +39,49 @@
         <button type="submit"><i class="fas fa-search"></i></button>
     </div>
 
-    <!-- Simple content placeholder -->
-    <div class="content-placeholder">
-        <h2>Main Content Area</h2>
-        <p>You can add your content here later.</p>
+    <h2>Featured Products</h2>
+    <div class="products-grid">
+        <!-- Product Card 1 -->
+        <div class="product-card">
+            <img src="https://images.vestiairecollective.com/images/resized/w=768,q=75,f=auto,/produit/grey-wool-comme-des-garcons-knitwear-sweatshirt-55120654-12_3.jpg" alt="Product 1">
+            <h3 class="product-title">Comme Des Garcons</h3>
+            <p class="product-price">$99.99</p>
+        </div>
+
+        <!-- Product Card 2 -->
+        <div class="product-card">
+            <img src="https://images.vestiairecollective.com/images/resized/w=768,q=75,f=auto,/produit/blue-leather-speedy-louis-vuitton-handbag-55215202-1_2.jpg" alt="Product 2">
+            <h3 class="product-title">Louis Vuitton</h3>
+            <p class="product-price">$89.99</p>
+        </div>
+
+        <!-- Product Card 3 -->
+        <div class="product-card">
+            <img src="https://images.vestiairecollective.com/images/resized/w=768,q=75,f=auto,/produit/grey-steel-oyster-perpetual-rolex-watch-55004456-1_3.jpg" alt="Product 3">
+            <h3 class="product-title">Rolex</h3>
+            <p class="product-price">$79.99</p>
+        </div>
+
+        <!-- Product Card 4 -->
+        <div class="product-card">
+            <img src="https://images.vestiairecollective.com/images/resized/w=768,q=75,f=auto,/produit/green-leather-saint-louis-goyard-handbag-54845172-1_2.jpg" alt="Product 4">
+            <h3 class="product-title">Goyard</h3>
+            <p class="product-price">$69.99</p>
+        </div>
     </div>
+
 </main>
 
 <footer>
-    <p>&copy; 2025 Your Website</p>
+    <p>&copy; 2025 Gilbert</p>
 </footer>
+
+
+<script>
+    document.querySelector('.burger-menu').addEventListener('click', function() {
+        document.querySelector('.nav-links').classList.toggle('active');
+    });
+</script>
+
 </body>
 </html>
