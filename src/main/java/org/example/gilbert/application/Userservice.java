@@ -8,7 +8,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class Userservice {
 
-    private Userrepo userrepo;
+    private final Userrepo userrepo;
+
+    public Userservice(Userrepo userrepo) {
+        this.userrepo = userrepo;
+    }
 
 
     public User SignIn(String Username, String Password) {
