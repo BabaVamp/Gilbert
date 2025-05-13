@@ -308,4 +308,8 @@ footer {
     header h1 {
         font-size: 2rem;
     }
+     .submit-btn {
+        background-color:  #423a26 ;
+        color: #f8f0e5;
+    }
 }

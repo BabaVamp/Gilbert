@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Sign Up</title>
-    <link rel="stylesheet" href="../static/GilbertStyle.css">
+    <link rel="stylesheet" href="/GilbertStyle.css">
 </head>
 <body>
 <div class="container">
@@ -16,9 +16,9 @@
         <label>Password</label>
         <input type="text" th:field="*{password}" required>
         <label>Navn</label>
-        <input type="text" th:field="*{firstname}" required>
+        <input type="text" th:field="*{firstName}" required>
         <label>Efternavn</label>
-        <input type="text" th:field="*{lastname}" required>
+        <input type="text" th:field="*{lastName}" required>
         <div class="error" th:text="${error}"></div>
         <button type="submit">Register <a href="/loggedin"> </a></button>
     </form>
