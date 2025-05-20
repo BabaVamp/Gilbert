@@ -2,9 +2,86 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Favourites</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favourites - Gilbert</title>
+    <link rel="stylesheet" href="/GilbertStyle.css">
+    <!-- Simple icon support -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+<header>
+    <h1>Gilbert</h1>
+</header>
 
+<nav>
+    <button class="burger-menu" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+    </button>
+    <div class="nav-links">
+        <ul class="nav-main">
+            <li><a href="home"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="brands"><i class="fas fa-tags"></i> Brands</a></li>
+            <li><a href="fav"><i class="fas fa-heart"></i> Favourites</a></li>
+        </ul>
+        <ul class="nav-auth">
+            <li><a href="signin"><i class="fas fa-sign-in-alt"></i> Sign In</a></li>
+            <li><a href="signup"><i class="fas fa-user-plus"></i> Sign Up</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main class="container">
+    <div id="login-required" style="display: block;">
+        <div class="card text-center">
+            <h2><i class="fas fa-lock"></i> Login Required</h2>
+            <p>You need to be logged in to view your favorites.</p>
+            <div class="text-center" style="margin-top: 20px;">
+                <a href="signin" class="btn">Sign In</a>
+                <a href="signup" class="btn btn-secondary">Sign Up</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="favorites-content" style="display: none;">
+        <h2>Your Favorites</h2>
+
+        <div class="products-grid">
+            <!-- This will be populated with favorites when the user is logged in -->
+            <div class="content-placeholder">
+                <p>You don't have any favorites yet.</p>
+                <p>Browse products and click the heart icon to add them to your favorites.</p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2025 Gilbert</p>
+</footer>
+
+<script>
+    // Handle burger menu toggle
+    document.querySelector('.burger-menu').addEventListener('click', function() {
+        document.querySelector('.nav-links').classList.toggle('active');
+    });
+
+    // Check if user is logged in (this will be replaced with actual session check)
+    // For now, we'll just show the login-required div
+    function checkLoginStatus() {
+        // This would be replaced with actual session check logic
+        var isLoggedIn = false; // Change this to true to test the logged-in view
+
+        if (isLoggedIn) {
+            document.getElementById('login-required').style.display = 'none';
+            document.getElementById('favorites-content').style.display = 'block';
+        } else {
+            document.getElementById('login-required').style.display = 'block';
+            document.getElementById('favorites-content').style.display = 'none';
+        }
+    }
+
+    // Run on page load
+    window.onload = checkLoginStatus;
+</script>
 </body>
 </html>
