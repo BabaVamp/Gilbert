@@ -2,9 +2,227 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Brands</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brands - Gilbert</title>
+    <link rel="stylesheet" href="/GilbertStyle.css">
+    <!-- Simple icon support -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Additional styles for brands page */
+        .brand-container {
+            margin-top: 30px;
+        }
+
+        .brand-input-container {
+            margin-bottom: 30px;
+        }
+
+        .brand-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .brand-tag {
+            background-color: #f8f0e5;
+            border: 1px solid #423a26;
+            border-radius: 20px;
+            padding: 8px 16px;
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .brand-tag:hover {
+            background-color: #423a26;
+            color: #f8f0e5;
+        }
+
+        .brand-tag i {
+            margin-left: 8px;
+            font-size: 0.8rem;
+        }
+
+        .brand-tag.favorite {
+            background-color: #004224;
+            color: #f8f0e5;
+        }
+
+        .brand-section {
+            margin-bottom: 30px;
+        }
+
+        .input-with-button {
+            display: flex;
+        }
+
+        .input-with-button input {
+            border-radius: 4px 0 0 4px;
+            margin-bottom: 0;
+        }
+
+        .input-with-button button {
+            border-radius: 0 4px 4px 0;
+            margin-left: -1px;
+        }
+    </style>
 </head>
 <body>
+<header>
+    <h1>Gilbert</h1>
+</header>
 
+<nav>
+    <button class="burger-menu" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+    </button>
+    <div class="nav-links">
+        <ul class="nav-main">
+            <li><a href="home"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="brands"><i class="fas fa-tags"></i> Brands</a></li>
+            <li><a href="favs"><i class="fas fa-heart"></i> Favourites</a></li>
+        </ul>
+        <ul class="nav-auth">
+            <li><a href="signin"><i class="fas fa-sign-in-alt"></i> Sign In</a></li>
+            <li><a href="signup"><i class="fas fa-user-plus"></i> Sign Up</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main class="container">
+    <h2>Brands</h2>
+
+    <div class="brand-input-container">
+        <h3>Add New Brand</h3>
+        <div class="input-with-button">
+            <input type="text" id="brandInput" placeholder="Enter brand name...">
+            <button class="btn" onclick="addBrand()">Add Brand</button>
+        </div>
+    </div>
+
+    <div class="brand-section">
+        <h3>Popular Brands</h3>
+        <div class="brand-list" id="popularBrands">
+            <div class="brand-tag" onclick="toggleFavorite(this)">Louis Vuitton <i class="far fa-heart"></i></div>
+            <div class="brand-tag" onclick="toggleFavorite(this)">Gucci <i class="far fa-heart"></i></div>
+            <div class="brand-tag" onclick="toggleFavorite(this)">Chanel <i class="far fa-heart"></i></div>
+            <div class="brand-tag" onclick="toggleFavorite(this)">Dior <i class="far fa-heart"></i></div>
+            <div class="brand-tag" onclick="toggleFavorite(this)">Prada <i class="far fa-heart"></i></div>
+            <div class="brand-tag" onclick="toggleFavorite(this)">Hermes <i class="far fa-heart"></i></div>
+            <div class="brand-tag" onclick="toggleFavorite(this)">Balenciaga <i class="far fa-heart"></i></div>
+            <div class="brand-tag" onclick="toggleFavorite(this)">Versace <i class="far fa-heart"></i></div>
+        </div>
+    </div>
+
+    <div class="brand-section">
+        <h3>Your Brands</h3>
+        <div class="brand-list" id="userBrands">
+            <!-- This will be populated with user-added brands -->
+        </div>
+    </div>
+
+    <div class="brand-section">
+        <h3>Favorite Brands</h3>
+        <div class="brand-list" id="favoriteBrands">
+            <!-- This will be populated with user's favorite brands -->
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2025 Gilbert</p>
+</footer>
+
+<script>
+    // Handle burger menu toggle
+    document.querySelector('.burger-menu').addEventListener('click', function() {
+        document.querySelector('.nav-links').classList.toggle('active');
+    });
+
+    // Function to add a new brand
+    function addBrand() {
+        const brandInput = document.getElementById('brandInput');
+        const brandName = brandInput.value.trim();
+
+        if (brandName) {
+            const brandTag = document.createElement('div');
+            brandTag.className = 'brand-tag';
+            brandTag.innerHTML = `${brandName} <i class="far fa-heart"></i>`;
+            brandTag.onclick = function() {
+                toggleFavorite(this);
+            };
+
+            document.getElementById('userBrands').appendChild(brandTag);
+            brandInput.value = '';
+        }
+    }
+
+    // Function to toggle favorite status
+    function toggleFavorite(element) {
+        const isFavorite = element.classList.contains('favorite');
+
+        if (isFavorite) {
+            element.classList.remove('favorite');
+            element.querySelector('i').className = 'far fa-heart';
+
+            // Remove from favorites section
+            const favoritesList = document.getElementById('favoriteBrands');
+            const favorites = favoritesList.querySelectorAll('.brand-tag');
+
+            for (let i = 0; i < favorites.length; i++) {
+                if (favorites[i].textContent.trim() === element.textContent.trim()) {
+                    favoritesList.removeChild(favorites[i]);
+                    break;
+                }
+            }
+        } else {
+            element.classList.add('favorite');
+            element.querySelector('i').className = 'fas fa-heart';
+
+            // Add to favorites section
+            const clonedElement = element.cloneNode(true);
+            clonedElement.onclick = function() {
+                toggleFavorite(this);
+
+                // Also toggle the original element
+                const originalElement = findOriginalElement(this.textContent.trim());
+                if (originalElement) {
+                    toggleFavorite(originalElement);
+                }
+            };
+
+            document.getElementById('favoriteBrands').appendChild(clonedElement);
+        }
+    }
+
+    // Helper function to find the original element by text content
+    function findOriginalElement(textContent) {
+        const popularBrands = document.getElementById('popularBrands').querySelectorAll('.brand-tag');
+        const userBrands = document.getElementById('userBrands').querySelectorAll('.brand-tag');
+
+        for (let i = 0; i < popularBrands.length; i++) {
+            if (popularBrands[i].textContent.trim() === textContent) {
+                return popularBrands[i];
+            }
+        }
+
+        for (let i = 0; i < userBrands.length; i++) {
+            if (userBrands[i].textContent.trim() === textContent) {
+                return userBrands[i];
+            }
+        }
+
+        return null;
+    }
+
+    // Allow adding brand with Enter key
+    document.getElementById('brandInput').addEventListener('keyup', function(event) {
+        if (event.key === 'Enter') {
+            addBrand();
+        }
+    });
+</script>
 </body>
 </html>

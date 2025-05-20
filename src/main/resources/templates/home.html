@@ -31,6 +31,59 @@
     </div>
 </nav>
 
+<!-- Brand filters section -->
+<div class="brand-filters">
+    <div class="dropdown">
+        <button class="dropdown-btn">
+            <i class="fas fa-tags"></i> Brands <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="#" onclick="filterByBrand('Louis Vuitton')">Louis Vuitton</a>
+            <a href="#" onclick="filterByBrand('Gucci')">Gucci</a>
+            <a href="#" onclick="filterByBrand('Chanel')">Chanel</a>
+            <a href="#" onclick="filterByBrand('Dior')">Dior</a>
+            <a href="#" onclick="filterByBrand('Prada')">Prada</a>
+            <a href="#" onclick="filterByBrand('Hermes')">Hermes</a>
+            <a href="#" onclick="filterByBrand('Rolex')">Rolex</a>
+            <a href="#" onclick="filterByBrand('Goyard')">Goyard</a>
+            <a href="#" onclick="filterByBrand('Comme Des Garcons')">Comme Des Garcons</a>
+        </div>
+    </div>
+
+    <!-- More filters could be added here -->
+    <div class="dropdown">
+        <button class="dropdown-btn">
+            <i class="fas fa-filter"></i> Category <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="#" onclick="filterByCategory('Clothing')">Clothing</a>
+            <a href="#" onclick="filterByCategory('Bags')">Bags</a>
+            <a href="#" onclick="filterByCategory('Watches')">Watches</a>
+            <a href="#" onclick="filterByCategory('Accessories')">Accessories</a>
+        </div>
+    </div>
+
+    <div class="dropdown">
+        <button class="dropdown-btn">
+            <i class="fas fa-sort"></i> Sort By <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="#" onclick="sortBy('price-asc')">Price: Low to High</a>
+            <a href="#" onclick="sortBy('price-desc')">Price: High to Low</a>
+            <a href="#" onclick="sortBy('newest')">Newest First</a>
+            <a href="#" onclick="sortBy('popular')">Most Popular</a>
+        </div>
+    </div>
+</div>
+
+<!-- Brand filter indicator -->
+<div id="activeFilter" style="display: none; margin-bottom: 20px; padding: 10px; background-color: #f0f0f0; border-radius: 4px;">
+    <span id="filterText">Showing: All Products</span>
+    <button onclick="clearFilters()" class="btn-secondary" style="margin-left: 10px; padding: 5px 10px; font-size: 0.8rem;">
+        Clear Filter <i class="fas fa-times"></i>
+    </button>
+</div>
+
 
 <main class="container">
     <!-- Simple search bar -->
@@ -78,9 +131,122 @@
 
 
 <script>
+
+
+    // Handle burger menu toggle
     document.querySelector('.burger-menu').addEventListener('click', function() {
         document.querySelector('.nav-links').classList.toggle('active');
     });
+
+    // Filter products by brand
+    function filterByBrand(brand) {
+        const products = document.querySelectorAll('.product-card');
+
+        products.forEach(product => {
+            if (product.getAttribute('data-brand') === brand) {
+                product.style.display = 'block';
+            } else {
+                product.style.display = 'none';
+            }
+        });
+
+        // Update filter indicator
+        document.getElementById('activeFilter').style.display = 'block';
+        document.getElementById('filterText').textContent = `Showing: ${brand}`;
+
+        // Update products title
+        document.getElementById('productsTitle').textContent = `${brand} Products`;
+    }
+
+    // Filter products by category
+    function filterByCategory(category) {
+        const products = document.querySelectorAll('.product-card');
+
+        products.forEach(product => {
+            if (product.getAttribute('data-category') === category) {
+                product.style.display = 'block';
+            } else {
+                product.style.display = 'none';
+            }
+        });
+
+        // Update filter indicator
+        document.getElementById('activeFilter').style.display = 'block';
+        document.getElementById('filterText').textContent = `Showing: ${category}`;
+
+        // Update products title
+        document.getElementById('productsTitle').textContent = `${category}`;
+    }
+
+    // Sort products
+    function sortBy(sortType) {
+        const productsGrid = document.getElementById('productsGrid');
+        const products = Array.from(productsGrid.querySelectorAll('.product-card'));
+
+        switch(sortType) {
+            case 'price-asc':
+                products.sort((a, b) => {
+                    const priceA = parseFloat(a.querySelector('.product-price').textContent.replace('$', ''));
+                    const priceB = parseFloat(b.querySelector('.product-price').textContent.replace('$', ''));
+                    return priceA - priceB;
+                });
+                break;
+            case 'price-desc':
+                products.sort((a, b) => {
+                    const priceA = parseFloat(a.querySelector('.product-price').textContent.replace('$', ''));
+                    const priceB = parseFloat(b.querySelector('.product-price').textContent.replace('$', ''));
+                    return priceB - priceA;
+                });
+                break;
+            // Add more sort types as needed
+        }
+
+        // Remove all products
+        while (productsGrid.firstChild) {
+            productsGrid.removeChild(productsGrid.firstChild);
+        }
+
+        // Add sorted products back
+        products.forEach(product => {
+            productsGrid.appendChild(product);
+        });
+
+        // Update filter indicator
+        document.getElementById('activeFilter').style.display = 'block';
+        let sortText = 'Price: Low to High';
+        if (sortType === 'price-desc') sortText = 'Price: High to Low';
+        if (sortType === 'newest') sortText = 'Newest First';
+        if (sortType === 'popular') sortText = 'Most Popular';
+        document.getElementById('filterText').textContent = `Sorted by: ${sortText}`;
+    }
+
+    // Clear all filters
+    function clearFilters() {
+        const products = document.querySelectorAll('.product-card');
+
+        products.forEach(product => {
+            product.style.display = 'block';
+        });
+
+        // Hide filter indicator
+        document.getElementById('activeFilter').style.display = 'none';
+
+        // Reset products title
+        document.getElementById('productsTitle').textContent = 'Featured Products';
+    }
+
+    // Close dropdowns when clicking outside
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropdown-btn') && !event.target.matches('.dropdown-btn *')) {
+            const dropdowns = document.getElementsByClassName('dropdown-content');
+            for (let i = 0; i < dropdowns.length; i++) {
+                const openDropdown = dropdowns[i];
+                if (openDropdown.style.display === 'block') {
+                    openDropdown.style.display = '';
+                }
+            }
+        }
+    }
 </script>
 
 </body>

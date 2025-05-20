@@ -195,6 +195,72 @@ p {
     background-color: #5a4f34;
 }
 
+
+/* Drop Down Menu*/
+
+/* Dropdown menu styles */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f8f0e5;
+    min-width: 200px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    z-index: 100;
+    border-radius: 4px;
+    border: 1px solid #423a26;
+}
+
+.dropdown-content a {
+    color: #004224;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    border-bottom: 1px solid #eee;
+}
+
+.dropdown-content a:last-child {
+    border-bottom: none;
+}
+
+.dropdown-content a:hover {
+    background-color: #e7e0d5;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-btn {
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 4px;
+    background-color: #004224;
+    color: #f8f0e5;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'The Seasons', serif;
+}
+
+.brand-filters {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.view-all-brands {
+    display: inline-block;
+    margin-top: 10px;
+}
+
 /* Cards */
 .card {
     background-color: white;
