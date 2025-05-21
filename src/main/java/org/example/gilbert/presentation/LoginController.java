@@ -34,7 +34,7 @@ public class LoginController {
         // Process user registration here
         // e.g., userService.register(user);
 
-        return "redirect:/login"; // Redirect to login page after successful signup
+        return "redirect:/signin"; // Redirect to login page after successful signup
     }
 
 
@@ -66,6 +66,23 @@ public class LoginController {
 
         return "home";
     }
+
+
+
+//    @GetMapping("/brands")
+//    public String showBrands() {
+//        return "brands";
+//    }
+//
+//    @GetMapping("/fav")
+//    public String showFavorites() {
+//        return "fav";
+//    }
+//
+//    @GetMapping("/home")
+//    public String showHome() {
+//        return "home";
+//    }
 
 
 
