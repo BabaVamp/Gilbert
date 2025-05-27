@@ -12,27 +12,45 @@ public class Userrepo {
 
     private JdbcTemplate jdbcTemplate;
 
-    public Userrepo(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
-    public User save(User user){
-        String sql ="INSERT INTO  (UserName, password, Email, FirstName, LastName) VALUES (?, ?, ?)";
-        jdbcTemplate.update(sql);
+    public User save(User user) {
+        String sql = "INSERT INTO User (Email, Password, FirstName, LastName) VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(sql, user.getEmail(), user.getPassword(), user.getFirstName(), user.getLastName());
         return user;
     }
 
-    public User findByEmail(String email){
-        try{
-            String sql ="SELECT * FROM USER WHERE EMAIL = ?";
+    public User findByEmail(String email) {
+        try {
+            String sql = "SELECT * FROM User WHERE Email = ?";
             return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), email);
-        }catch(Exception e){
+        } catch (Exception e) {
             return null;
         }
-
     }
 
+    public User findById(int memberID) {
+        try {
+            String sql = "SELECT * FROM User WHERE MemberID = ?";
+            return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), memberID);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
+    public boolean existsByEmail(String email) {
+        String sql = "SELECT COUNT(*) FROM User WHERE Email = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, email);
+        return count != null && count > 0;
+    }
+
+    public void updateUser(User user) {
+        String sql = "UPDATE User SET Email = ?, FirstName = ?, LastName = ? WHERE MemberID = ?";
+        jdbcTemplate.update(sql, user.getEmail(), user.getFirstName(), user.getLastName(), user.getMemberID());
+    }
+
+    public void deleteUser(int memberID) {
+        String sql = "DELETE FROM User WHERE MemberID = ?";
+        jdbcTemplate.update(sql, memberID);
+    }
 }
 
 

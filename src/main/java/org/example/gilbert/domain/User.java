@@ -5,7 +5,7 @@ public class User {
     public User() {
     }
 
-    private int id;
+    private int memberID;
     private String username;
     private String email;
     private String UserName;
@@ -13,12 +13,12 @@ public class User {
     private String firstName;
     private String lastName;
 
-    public int getId() {
-        return id;
+    public int getMemberID() {
+        return memberID;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setMemberID(int memberID) {
+        this.memberID = memberID;
     }
 
     public String getUsername() {

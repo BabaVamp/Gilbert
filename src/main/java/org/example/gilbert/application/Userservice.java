@@ -2,56 +2,88 @@ package org.example.gilbert.application;
 
 import org.example.gilbert.domain.User;
 import org.example.gilbert.infrastucture.Userrepo;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 
 @Service
 public class Userservice {
 
     private final Userrepo userrepo;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public Userservice(Userrepo userrepo) {
         this.userrepo = userrepo;
+        this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
+    public User signIn(String email, String password) {
+        System.out.println("Login attempt for email: " + email);
 
-    public User SignIn(String Username, String Password) {
-        String TestUser = "Test";
-        String TestPassword = "123";
+        // Find user by email
+        User user = userrepo.findByEmail(email);
 
-        System.out.println("login attempt" + TestUser);
-
-        if (TestUser.equals(TestUser) && TestPassword.equals(Password)) {
-            System.out.println("login successful");
-            User user = new User();
-            user.setUsername(TestUser);
-            user.setPassword("[Password]");
-            user.setFirstName("Test");
-            user.setLastName("User");
+        if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+            System.out.println("Login successful for: " + email);
+            // Don't return the password in the user object
+            user.setPassword("[PROTECTED]");
             return user;
-
         }
-        System.out.println("login failed");
+
+        System.out.println("Login failed for: " + email);
         return null;
     }
 
-//    public User GetUserByUsername(String username) {
-//        if ("Test".equals(username)) {
-//            User testUser = new User();
-//            testUser.setUsername("Test");
-//            testUser.setPassword("123"); // or whatever the test password is
-//            return testUser;
-//        }
-//        return null; // User not found
-//    }
+    public User createUser(User user) throws Exception {
+        // Check if user already exists
+        if (userrepo.existsByEmail(user.getEmail())) {
+            throw new Exception("User with this email already exists");
+        }
 
+        // Validate required fields
+        if (user.getEmail() == null || user.getEmail().trim().isEmpty()) {
+            throw new Exception("Email is required");
+        }
+        if (user.getPassword() == null || user.getPassword().trim().isEmpty()) {
+            throw new Exception("Password is required");
+        }
+        if (user.getFirstName() == null || user.getFirstName().trim().isEmpty()) {
+            throw new Exception("First name is required");
+        }
+        if (user.getLastName() == null || user.getLastName().trim().isEmpty()) {
+            throw new Exception("Last name is required");
+        }
 
-    public User createUser(User user) {
+        // Validate email format (basic validation)
+        if (!user.getEmail().contains("@") || !user.getEmail().contains(".")) {
+            throw new Exception("Invalid email format");
+        }
+
+        // Validate password length
+        if (user.getPassword().length() < 6) {
+            throw new Exception("Password must be at least 6 characters long");
+        }
+
+        // Hash the password
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        // Save user
         return userrepo.save(user);
-
     }
 
     public User findByEmail(String email) {
         return userrepo.findByEmail(email);
+    }
+
+    public User findById(int memberID) {
+        return userrepo.findById(memberID);
+    }
+
+    public boolean isValidUser(String email, String password) {
+        User user = userrepo.findByEmail(email);
+        return user != null && passwordEncoder.matches(password, user.getPassword());
+    }
+
+    public void updateUser(User user) {
+        userrepo.updateUser(user);
     }
 }
