@@ -1,6 +1,8 @@
 package org.example.gilbert.presentation;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
@@ -17,7 +19,10 @@ public class PageController {
     }
 
     @GetMapping("/fav")
-    public String favorites() {
+    public String favorites(HttpSession session, Model model) {
+        if (session.getAttribute("isAuthenticated") == null) {
+            return "redirect:/signin";
+        }
         return "fav";
     }
 

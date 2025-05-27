@@ -1,5 +1,6 @@
 package org.example.gilbert.presentation;
 
+import jakarta.servlet.http.HttpSession;
 import org.example.gilbert.application.Userservice;
 import org.example.gilbert.domain.User;
 import org.springframework.stereotype.Controller;
@@ -62,31 +63,18 @@ public class LoginController {
     }
 
     @PostMapping("/signin")
-    public String signin(@ModelAttribute User user, Model model) {
+    public String signin(@ModelAttribute User user, Model model, HttpSession session) {
+        // Use your existing SignIn method
+        User authenticatedUser = userservice.SignIn(user.getUsername(), user.getPassword());
 
-        return "home";
+        if (authenticatedUser != null) {
+            // User is valid - store in session
+            session.setAttribute("loggedInUser", authenticatedUser);
+            return "redirect:/home";
+        } else {
+            // Invalid credentials
+            model.addAttribute("error", "Invalid username or password");
+            return "signin";
+        }
     }
-
-
-
-//    @GetMapping("/brands")
-//    public String showBrands() {
-//        return "brands";
-//    }
-//
-//    @GetMapping("/fav")
-//    public String showFavorites() {
-//        return "fav";
-//    }
-//
-//    @GetMapping("/home")
-//    public String showHome() {
-//        return "home";
-//    }
-
-
-
-
-
-
 }
