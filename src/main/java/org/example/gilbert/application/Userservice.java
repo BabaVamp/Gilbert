@@ -35,10 +35,15 @@ public class Userservice {
         return null;
     }
 
-    public User GetUserByUsername(String username) {
-        String TestUser = "Test";
-        return new User();
-    }
+//    public User GetUserByUsername(String username) {
+//        if ("Test".equals(username)) {
+//            User testUser = new User();
+//            testUser.setUsername("Test");
+//            testUser.setPassword("123"); // or whatever the test password is
+//            return testUser;
+//        }
+//        return null; // User not found
+//    }
 
 
     public User createUser(User user) {
