@@ -63,6 +63,11 @@ public class Userservice {
             throw new Exception("Password must be at least 6 characters long");
         }
 
+        // Set username if not provided
+        if (user.getUserName() == null || user.getUserName().trim().isEmpty()) {
+            user.setUserName(user.getEmail().split("@")[0]); // Use email prefix as username
+        }
+
         // Hash the password
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 

@@ -1,6 +1,7 @@
 package org.example.gilbert.infrastucture;
 
 import org.springframework.context.annotation.*;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import javax.sql.DataSource;
 
@@ -16,5 +17,9 @@ public class DatabaseConfig {
         dataSource.setPassword("root");
         return dataSource;
 
+    }
+    @Bean
+    public JdbcTemplate jdbcTemplate() {
+        return new JdbcTemplate(dataSource());
     }
 }

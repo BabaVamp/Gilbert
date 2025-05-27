@@ -10,7 +10,7 @@
   <h2>Sign In</h2>
   <!-- Change the action to include the full path to prevent Spring Security interception -->
   <form action="/signin" method="post" th:object="${user}">
-    <label>Username</label>
+    <label>Email</label>
     <input type="text" name="email" th:field="*{email}" required>
     <label>Password</label>
     <input type="password" name="password" th:field="*{password}" required>

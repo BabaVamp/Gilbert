@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sell Your Item - Gilbert</title>
+  <link rel="stylesheet" href="/GilbertStyle.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+<header>
+  <h1>Gilbert</h1>
+</header>
+
+<nav>
+  <button class="burger-menu" aria-label="Toggle navigation">
+    <i class="fas fa-bars"></i>
+  </button>
+  <div class="nav-links">
+    <ul class="nav-main">
+      <li><a href="/home"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="/brands"><i class="fas fa-tags"></i> Brands</a></li>
+      <li><a href="/fav"><i class="fas fa-heart"></i> Favourites</a></li>
+      <li><a href="/sell"><i class="fas fa-plus-circle"></i> Sell</a></li>
+      <li><a href="/my-listings"><i class="fas fa-list"></i> My Listings</a></li>
+    </ul>
+    <ul class="nav-auth">
+      <li><span style="color: #f8f0e5;"><i class="fas fa-user"></i> <span th:text="${user?.firstName}">User</span></span></li>
+      <li><a href="/signout"><i class="fas fa-sign-out-alt"></i> Sign Out</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="container">
+  <h2 style="text-align: center; margin-bottom: 30px;">
+    <i class="fas fa-tag"></i> Sell Your Item
+  </h2>
+
+  <!-- Success Message -->
+  <div th:if="${success}" class="success-message">
+    <i class="fas fa-check-circle"></i> <span th:text="${success}"></span>
+  </div>
+
+  <!-- Error Message -->
+  <div th:if="${error}" class="error-message">
+    <i class="fas fa-exclamation-circle"></i> <span th:text="${error}"></span>
+  </div>
+
+  <form class="sell-form" th:action="@{/sell}" th:object="${listing}" method="post">
+
+    <!-- Title -->
+    <div class="form-group">
+      <label for="title"><i class="fas fa-heading"></i> Item Title *</label>
+      <input type="text" id="title" th:field="*{title}"
+             placeholder="e.g., Louis Vuitton Speedy 30 Handbag" required>
+    </div>
+
+    <!-- Brand and Category Row -->
+    <div class="form-row">
+      <div class="form-group">
+        <label for="brand"><i class="fas fa-tags"></i> Brand *</label>
+        <select id="brand" th:field="*{brand}" required>
+          <option value="">Select Brand</option>
+          <option value="Louis Vuitton">Louis Vuitton</option>
+          <option value="Gucci">Gucci</option>
+          <option value="Chanel">Chanel</option>
+          <option value="Dior">Dior</option>
+          <option value="Prada">Prada</option>
+          <option value="Hermes">Hermes</option>
+          <option value="Balenciaga">Balenciaga</option>
+          <option value="Versace">Versace</option>
+          <option value="Rolex">Rolex</option>
+          <option value="Goyard">Goyard</option>
+          <option value="Comme Des Garcons">Comme Des Garcons</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="category"><i class="fas fa-list"></i> Category *</label>
+        <select id="category" th:field="*{category}" required>
+          <option value="">Select Category</option>
+          <option value="Clothing">Clothing</option>
+          <option value="Bags">Bags</option>
+          <option value="Watches">Watches</option>
+          <option value="Accessories">Accessories</option>
+          <option value="Shoes">Shoes</option>
+          <option value="Jewelry">Jewelry</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Size and Condition Row -->
+    <div class="form-row">
+      <div class="form-group">
+        <label for="size"><i class="fas fa-ruler"></i> Size</label>
+        <input type="text" id="size" th:field="*{size}"
+               placeholder="e.g., M, 38, One Size">
+      </div>
+
+      <div class="form-group">
+        <label for="condition"><i class="fas fa-star"></i> Condition *</label>
+        <select id="condition" th:field="*{condition}" required>
+          <option value="">Select Condition</option>
+          <option value="New with Tags">New with Tags</option>
+          <option value="New without Tags">New without Tags</option>
+          <option value="Excellent">Excellent</option>
+          <option value="Very Good">Very Good</option>
+          <option value="Good">Good</option>
+          <option value="Fair">Fair</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Price -->
+    <div class="form-group">
+      <label for="price"><i class="fas fa-dollar-sign"></i> Price *</label>
+      <div class="price-input">
+        <input type="number" id="price" th:field="*{price}"
+               placeholder="0.00" step="0.01" min="0.01" required>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="form-group">
+      <label for="description"><i class="fas fa-align-left"></i> Description *</label>
+      <textarea id="description" th:field="*{description}" rows="5"
+                placeholder="Describe your item in detail. Include any flaws, authenticity details, measurements, etc."
+                required></textarea>
+    </div>
+
+    <!-- Image Upload -->
+    <div class="form-group">
+      <label><i class="fas fa-camera"></i> Item Photos</label>
+      <div class="image-upload-area" onclick="document.getElementById('imageUpload').click()">
+        <i class="fas fa-cloud-upload-alt"></i>
+        <h3>Upload Photos</h3>
+        <p>Click to select images or drag and drop</p>
+        <p style="font-size: 0.9rem; color: #666;">JPG, PNG up to 10MB each</p>
+      </div>
+      <input type="file" id="imageUpload" style="display: none;"
+             accept="image/*" multiple onchange="handleImageUpload(this)">
+      <input type="hidden" th:field="*{imageUrl}" id="imageUrlField">
+    </div>
+
+    <!-- Image Preview Area -->
+    <div id="imagePreview" style="display: none; margin-top: 15px;">
+      <h4>Selected Images:</h4>
+      <div id="previewContainer" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;">
+        <!-- Image previews will be added here -->
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn-submit">
+      <i class="fas fa-upload"></i> List My Item
+    </button>
+  </form>
+</main>
+
+<footer>
+  <p>&copy; 2025 Gilbert</p>
+</footer>
+
+<script>
+  // Handle burger menu toggle
+  document.querySelector('.burger-menu').addEventListener('click', function() {
+    document.querySelector('.nav-links').classList.toggle('active');
+  });
+
+  // Handle image upload
+  function handleImageUpload(input) {
+    const files = input.files;
+    const previewContainer = document.getElementById('previewContainer');
+    const imagePreview = document.getElementById('imagePreview');
+
+    // Clear previous previews
+    previewContainer.innerHTML = '';
+
+    if (files.length > 0) {
+      imagePreview.style.display = 'block';
+
+      // For demo purposes, we'll just show the first image URL
+      // In a real application, you'd upload these to a server/cloud storage
+      const firstFile = files[0];
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.style.width = '100px';
+        img.style.height = '100px';
+        img.style.objectFit = 'cover';
+        img.style.borderRadius = '8px';
+        img.style.border = '2px solid #423a26';
+
+        previewContainer.appendChild(img);
+
+        // For demo purposes, set a placeholder URL
+        document.getElementById('imageUrlField').value = 'placeholder-image-url.jpg';
+      };
+
+      reader.readAsDataURL(firstFile);
+
+      // Show additional file count if more than 1
+      if (files.length > 1) {
+        const moreText = document.createElement('div');
+        moreText.textContent = `+${files.length - 1} more images`;
+        moreText.style.padding = '20px';
+        moreText.style.backgroundColor = '#f8f0e5';
+        moreText.style.border = '2px dashed #423a26';
+        moreText.style.borderRadius = '8px';
+        moreText.style.textAlign = 'center';
+        moreText.style.color = '#423a26';
+        previewContainer.appendChild(moreText);
+      }
+    } else {
+      imagePreview.style.display = 'none';
+    }
+  }
+
+  // Add drag and drop functionality
+  const uploadArea = document.querySelector('.image-upload-area');
+
+  uploadArea.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    this.style.borderColor = '#004224';
+    this.style.backgroundColor = '#f0e8d5';
+  });
+
+  uploadArea.addEventListener('dragleave', function(e) {
+    e.preventDefault();
+    this.style.borderColor = '#423a26';
+    this.style.backgroundColor = '#f8f0e5';
+  });
+
+  uploadArea.addEventListener('drop', function(e) {
+    e.preventDefault();
+    this.style.borderColor = '#423a26';
+    this.style.backgroundColor = '#f8f0e5';
+
+    const files = e.dataTransfer.files;
+    document.getElementById('imageUpload').files = files;
+    handleImageUpload(document.getElementById('imageUpload'));
+  });
+</script>
+</body>
+</html>

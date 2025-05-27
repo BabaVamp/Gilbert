@@ -6,7 +6,6 @@ public class User {
     }
 
     private int memberID;
-    private String username;
     private String email;
     private String UserName;
     private String password;
@@ -20,14 +19,14 @@ public class User {
     public void setMemberID(int memberID) {
         this.memberID = memberID;
     }
-
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return UserName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        UserName = userName;
     }
+
 
     public String getEmail() {
         return email;
@@ -36,13 +35,7 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-    public String getUserName() {
-        return UserName;
-    }
 
-    public void setUserName(String userName) {
-        UserName = userName;
-    }
 
     public String getPassword() {
         return password;
