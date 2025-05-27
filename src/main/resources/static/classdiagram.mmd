@@ -1,0 +1,137 @@
+classDiagram
+    direction LR
+
+class GilbertApplication {
+<<SpringBootApplication>>
++ main(String[] args)
+}
+
+
+class ListingService {
+<<Service>>
++ createListing(Listing listing)
++ getAllActiveListings()
++ getListingsBySellerID(int sellerID)
++ getListingsByBrand(String brand)
++ getListingsByCategory(String category)
++ getListingById(int listingID)
++ markAsSold(int listingID)
++ markAsRemoved(int listingID)
++ deleteListing(int listingID)
++ searchListings(String searchTerm)
++ isOwner(int listingID, int userID)
+}
+
+
+class Userservice {
+<<Service>>
++ signIn(String email, String password)
++ createUser(User user)
++ findByEmail(String email)
++ findById(int memberID)
++ isValidUser (String email, String password)
++ updateUser(User user)
+}
+
+
+class ListingRepo {
+<<Repository>>
++ save(Listing listing)
++ findAllActive()
++ findBySellerID(int sellerID)
++ findByBrand(String brand)
++ findByCategory(String category)
++ findById(int listingID)
++ updateStatus(int listingID, String status)
++ deleteListing(int listingID)
++ searchListings(String searchTerm)
+}
+
+
+class Userrepo {
+<<Repository>>
++ save(User user)
++ findByEmail(String email)
++ findById(int memberID)
++ existsByEmail(String email)
++ updateUser(User user)
++ deleteUser(int memberID)
+}
+
+
+class DatabaseConfig {
+<<Configuration>>
++ dataSource()
++ jdbcTemplate()
+}
+
+
+class Listing {
++ listingID
++ sellerID
++ title
++ description
++ brand
++ category
++ size
++ condition
++ price
++ imageUrl
++ status
++ createdAt
++ updatedAt
+}
+
+
+class User {
++ memberID
++ email
++ UserName
++ password
++ firstName
++ lastName
+}
+
+
+class ListingController {
+<<Controller>>
++ showSellForm(HttpSession session, Model model)
++ processSell(@ModelAttribute Listing listing, HttpSession session, Model model)
++ myListings(HttpSession session, Model model)
++ viewListing(@PathVariable int id, Model model, HttpSession session)
++ markAsSold(@PathVariable int id, HttpSession session)
++ removeListing(@PathVariable int id, HttpSession session)
++ search(@RequestParam(required = false) String q, Model model)
+    }
+
+
+class LoginController {
+<<Controller>>
++ root()
++ showSignupForm(Model model)
++ processSignup(@ModelAttribute User user, Model model)
++ showSigninForm(Model model)
++ processSignin(@ModelAttribute User user, Model model, HttpSession session)
++ signOut(HttpSession session)
++ profile(HttpSession session, Model model)
+}
+
+
+class PageController {
+<<Controller>>
++ brands()
++ home(Model model, @RequestParam(required = false) String brand, @RequestParam(required = false) String category)
++ favorites(HttpSession session, Model model)
++ favs(HttpSession session, Model model)
+}
+
+
+GilbertApplication --> ListingService
+GilbertApplication --> Userservice
+ListingService --> ListingRepo
+Userservice --> Userrepo
+ListingRepo --> DatabaseConfig
+Userrepo --> DatabaseConfig
+ListingController --> ListingService
+LoginController --> Userservice
+PageController --> ListingService
