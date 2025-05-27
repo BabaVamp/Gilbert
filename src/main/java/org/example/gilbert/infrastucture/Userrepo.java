@@ -10,11 +10,16 @@ import org.springframework.stereotype.Repository;
 public class Userrepo {
 
 
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
+
+    // Constructor injection - this was missing!
+    public Userrepo(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     public User save(User user) {
-        String sql = "INSERT INTO User (Email, Password, FirstName, LastName) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(sql, user.getEmail(), user.getPassword(), user.getFirstName(), user.getLastName());
+        String sql = "INSERT INTO User (Email, Password, FirstName, LastName, UserName) VALUES (?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, user.getEmail(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getUserName());
         return user;
     }
 
@@ -52,5 +57,3 @@ public class Userrepo {
         jdbcTemplate.update(sql, memberID);
     }
 }
-
-
